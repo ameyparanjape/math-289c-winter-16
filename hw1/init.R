@@ -7,9 +7,9 @@ babies_dot = read.table("babies..txt", header = TRUE)
 head(babies23)
 
 # See distribution of smokers
-# 692 samples
-babies23.smoke = babies23[which(babies23$smoke != 0), ]
-s.wt = babies23.smoke&smoke
+# 579 samples
+babies23.smoke = babies23[which(babies23$smoke == 1 | babies23$smoke == 2), ]
+s.wt = babies23.smoke$wt
 #ggplot(data, aes(babies23.smoke$wt)) + geom_histogram() 
 hist(s.wt)
 qqnorm(s.wt)
