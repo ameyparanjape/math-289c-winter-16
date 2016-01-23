@@ -29,11 +29,11 @@ for(i in 1:11){
 }
 
 
-plot(83:92,s_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
-lines(83:92,s_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
+plot(83:93,s_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
+lines(83:93,s_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
 
-plot(83:92,ns_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Non-smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
-lines(83:92,ns_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Non-mokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
+plot(83:93,ns_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Non-smokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
+lines(83:93,ns_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low Birth Rate \n Non-mokers",xlab="Low Birth Weight Threshold",ylab="Low Birth Rate")
 
 #Ratio of (low birth weight rate for smokers)/(low birth weight rate for non-smokers)
 lb_rate_ratio = s_lb_rate/ns_lb_rate
