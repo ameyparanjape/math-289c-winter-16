@@ -16,8 +16,8 @@ qqnorm(s.wt)
 
 
 # See distribution of non smokers
-#544 samples
-babies23.nosmoke = babies23[which(babies23$smoke == 0), ]
+# 544 samples
+babies23.nosmoke = babies23[which(babies23$time == 0), ]
 ns.wt = babies23.nosmoke$wt
 hist(ns.wt)
 qqnorm(ns.wt)
@@ -74,4 +74,25 @@ hist(sample_s_rate,breaks=8,main='Rate of low birthweight for smokers\n1000 simu
 
 hist(sample_ns_rate,breaks=8,main='Rate of low birthweight for non-smokers\n1000 simulations',xlab='Low birthweight rate')
 
+# See distribution of former smokers
+# 103 samples
+babies23.hadsmoke = babies23[which(babies23$smoke == 3), ]
+hs.wt = babies23.hadsmoke$wt
+hist(hs.wt)
+qqnorm(hs.wt)
 
+# See overlapped distribution of all three
+hist(ns.wt, col=rgb(1, 0, 0,0.5))
+hist(s.wt, col=rgb(0, 1, 0, 0.5), add=T)
+hist(hs.wt, col=rgb(0, 0, 1, 0.5), add=T)
+
+# See ovelapped distribution with boxplots
+boxplot(ns.wt, s.wt, hs.wt)
+# See if education and smoking during pregnancy are correlated
+s.college = babies23[which(babies23$smoke == 1),]
+s.college = s.college[which(s.college$ed == 5),]
+head(s.college)
+
+
+smokers = babies23[which(babies23$smoke == 1),]
+s.prop = nrows(smokers) / nrows(babies23)
