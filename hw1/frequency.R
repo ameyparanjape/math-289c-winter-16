@@ -37,8 +37,8 @@ lines(83:93,ns_lb_rate,ylim=c(0.0,0.1),main="Low Birth Weight Threshold vs Low B
 
 #Ratio of (low birth weight rate for smokers)/(low birth weight rate for non-smokers)
 lb_rate_ratio = s_lb_rate/ns_lb_rate
-plot(83:92,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoker vs Non-Smoker\nRatio of low birth rate",xlab="Low Birth Weight Threshold",ylab="Ratio")
-lines(83:92,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoker vs Non-Smoker\nRatio of low birth rate",xlab="Low Birth Weight Threshold",ylab="Ratio")
+plot(83:93,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoker vs Non-Smoker\nRatio of low birth rate",xlab="Low Birth Weight Threshold",ylab="Ratio")
+lines(83:93,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoker vs Non-Smoker\nRatio of low birth rate",xlab="Low Birth Weight Threshold",ylab="Ratio")
 
 summary(s_lb_rate)
 summary(ns_lb_rate)
