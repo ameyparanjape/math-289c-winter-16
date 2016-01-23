@@ -9,7 +9,7 @@ head(babies23)
 # See distribution of smokers
 # 692 samples
 babies23.smoke = babies23[which(babies23$smoke != 0), ]
-s.wt = babies23.smoke&smoke
+s.wt = babies23.smoke$wt
 #ggplot(data, aes(babies23.smoke$wt)) + geom_histogram() 
 hist(s.wt)
 qqnorm(s.wt)
@@ -33,3 +33,9 @@ hist(ns.wt, col=rgb(0.7,0.5,0.1,0.5), add=T)
 
 boxplot(s.wt, ns.wt)
 
+#low birthweight rate
+s_low_birth = babies23[which(babies23$wt<88&babies23$smoke != 0),]
+s_lb_rate = nrow(s_low_birth)/length(s.wt)
+
+ns_low_birth = babies23[which(babies23$wt<88&babies23$smoke == 0),]
+ns_lb_rate = nrow(ns_low_birth)/length(ns.wt)
