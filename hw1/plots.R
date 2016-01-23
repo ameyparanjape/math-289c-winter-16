@@ -1,66 +1,3 @@
-Massoud
-
-
-Search Drive
-
-Drive
-.
-Folder Path
-My Drive
-math 189
-MAT189
-NEW 
-Folders and views
-My DriveCollapsed
-Shared with me
-Google Photos
-Recent
-Starred
-Trash
-9 GB of 115 GB used
-Upgrade storage
-.
-
-Text
-babies.txt
-
-Text
-babies23.txt
-
-Image
-Boxplot.Answered.png
-
-Image
-Boxplot.Narrow.png
-
-Text
-GraphingCode.txt
-
-Image
-hist.nonsmoke.png
-
-Image
-hist.old.png
-
-Image
-hist.quitters.png
-
-Image
-hist.smoke.png
-Text
-GraphingCode.txt
-Details
-Activity
-TODAY
-R
-Robert Correauploaded an item
-9:48 AM
-Text
-GraphingCode.txt
-No recorded activity before January 23, 2016
-Get Drive for Mac
-All selections cleared
-
 # Code used to generate boxplots and histograms
 # Data used is babies23.txt (switch string for other data sets)
 # ggplot2 required for histograms
@@ -93,7 +30,7 @@ boxplot(data.narrow$wt~data.narrow$smoke,
 ################################################################################
 # Histogram Creation Below
 ################################################################################
-
+# Grouping data
 # Group the non smokers
 data.nonsmoke <- babies23[babies23$smoke == 0,]
 
