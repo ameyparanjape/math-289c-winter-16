@@ -7,9 +7,9 @@ babies_dot = read.table("babies..txt", header = TRUE)
 head(babies23)
 
 # See distribution of smokers
-# 579 samples
-babies23.smoke = babies23[which(babies23$smoke == 1 | babies23$smoke == 2), ]
-s.wt = babies23.smoke$wt
+# 692 samples
+babies23.smoke = babies23[which(babies23$smoke != 0), ]
+s.wt = babies23.smoke&smoke
 #ggplot(data, aes(babies23.smoke$wt)) + geom_histogram() 
 hist(s.wt)
 qqnorm(s.wt)
@@ -33,6 +33,7 @@ hist(ns.wt, col=rgb(0.7,0.5,0.1,0.5), add=T)
 
 boxplot(s.wt, ns.wt)
 
+<<<<<<< HEAD
 # See distribution of former smokers
 # 103 samples
 babies23.hadsmoke = babies23[which(babies23$smoke == 3), ]
@@ -47,3 +48,15 @@ hist(hs.wt, col=rgb(0, 0, 1, 0.5), add=T)
 
 # See ovelapped distribution with boxplots
 boxplot(ns.wt, s.wt, hs.wt)
+=======
+# See if education and smoking during pregnancy are correlated
+s.college = babies23[which(babies23$smoke == 1),]
+s.college = s.college[which(s.college$ed == 5),]
+head(s.college)
+
+college = babies23[which(babies23$ed == 5),]
+s.college.prop = nrow(s.college) / nrow(college)
+
+smokers = babies23[which(babies23$smoke == 1),]
+s.prop = nrows(smokers) / nrows(babies23)
+>>>>>>> b736161ae3bf6c617e37b32d585346d72c576fca
