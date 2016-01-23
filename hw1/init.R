@@ -16,8 +16,8 @@ qqnorm(s.wt)
 
 
 # See distribution of non smokers
-#544 samples
-babies23.nosmoke = babies23[which(babies23$smoke == 0), ]
+# 544 samples
+babies23.nosmoke = babies23[which(babies23$time == 0), ]
 ns.wt = babies23.nosmoke$wt
 hist(ns.wt)
 qqnorm(ns.wt)
@@ -33,3 +33,17 @@ hist(ns.wt, col=rgb(0.7,0.5,0.1,0.5), add=T)
 
 boxplot(s.wt, ns.wt)
 
+# See distribution of former smokers
+# 103 samples
+babies23.hadsmoke = babies23[which(babies23$smoke == 3), ]
+hs.wt = babies23.hadsmoke$wt
+hist(hs.wt)
+qqnorm(hs.wt)
+
+# See overlapped distribution of all three
+hist(ns.wt, col=rgb(1, 0, 0,0.5))
+hist(s.wt, col=rgb(0, 1, 0, 0.5), add=T)
+hist(hs.wt, col=rgb(0, 0, 1, 0.5), add=T)
+
+# See ovelapped distribution with boxplots
+boxplot(ns.wt, s.wt, hs.wt)
