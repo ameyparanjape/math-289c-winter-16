@@ -2,7 +2,7 @@
 babies23 = read.table("babies23.txt", header = TRUE)
 babies_dot = read.table("babies..txt", header = TRUE)
 
-# Distribution of smokers
+# Distribution of smokers who smoked currently and smoked until pregnancy
 # 579 samples
 babies23.smoke = babies23[which(babies23$smoke == 1 | babies23$smoke == 2), ]
 s.wt = babies23.smoke$wt
