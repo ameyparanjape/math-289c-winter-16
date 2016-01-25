@@ -17,28 +17,28 @@ ns_lb_rate = vector("numeric",length = 11)
 for(i in 1:11){
   #low birthweight rate for smoke
   s_low_birth = babies23.smoke[which(babies23.smoke$wt<i+82),]
-  s_lb_rate[i] = nrow(s_low_birth)/length(s.wt)
+  s_lb_rate[i] = 100*nrow(s_low_birth)/length(s.wt)
   
   #low birthweight rate for non-smoke
   ns_low_birth = babies23.nosmoke[which(babies23.nosmoke$wt<i+82),]
-  ns_lb_rate[i] = nrow(ns_low_birth)/length(ns.wt)
+  ns_lb_rate[i] = 100*nrow(ns_low_birth)/length(ns.wt)
 }
 
 test_range = 83:93
-plot(test_range,s_lb_rate,ylim=c(0.0,0.1),col='red',main="Low Birth Weight Threshold vs Low Birth Rate",xlab="Low Birth Weight Threshold(pounds)",ylab="Low Birth Weight Rate")
-lines(test_range,s_lb_rate,col='red',ylim=c(0.0,0.1),xlab='',ylab='')
+plot(test_range,s_lb_rate,ylim=c(0.0,10),col='red',main="Low Birth Weight Threshold\nvs Low Birth Weight Rate",xlab="Low Birth Weight Threshold(ounces)",ylab="Percentage of Babies Born under Weight(%)")
+lines(test_range,s_lb_rate,col='red',ylim=c(0.0,10),xlab='',ylab='')
 par(new=T)
-plot(test_range,ns_lb_rate,col='blue',ylim=c(0.0,0.1),xlab='',ylab='')
-lines(test_range,ns_lb_rate,col='blue',ylim=c(0.0,0.1),xlab='',ylab='')
+plot(test_range,ns_lb_rate,col='blue',ylim=c(0.0,10),xlab='',ylab='')
+lines(test_range,ns_lb_rate,col='blue',ylim=c(0.0,10),xlab='',ylab='')
 abline(lm(s_lb_rate ~ test_range),col='red')
 abline(lm(ns_lb_rate ~ test_range),col='blue')
-legend("topleft",c('Smoking mothers','Non-smoking mothers'),col=c('red','blue'),pch=c(1,3))
+legend("topleft",c('Smoking mothers','Non-smoking mothers'),col=c('red','blue'),pch=c(1,1))
 par(new=F)
 
 #Ratio of (low birth weight rate for smokers)/(low birth weight rate for non-smokers)
 lb_rate_ratio = s_lb_rate/ns_lb_rate
-plot(test_range,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoking mothers vs Non-Smoking Mothers\nRatio of low birth rate",xlab="Low Birth Weight Threshold(pounds)",ylab="Ratio")
-lines(test_range,lb_rate_ratio,ylim=c(0.0,2.5),main="Smoking mothers vs Non-Smoking Mothers\nRatio of low birth rate",xlab="Low Birth Weight Threshold(pounds)",ylab="Ratio")
+plot(test_range,lb_rate_ratio,ylim=c(0.0,2.5),main="Ratio of Low Birth Rate between\nSmoking Mothers and Non-Smoking Mothers",xlab="Low Birth Weight Threshold(ounces)",ylab="Ratio")
+lines(test_range,lb_rate_ratio,ylim=c(0.0,2.5),main="",xlab="",ylab="")
 
 
 summary(s_lb_rate)
