@@ -5,5 +5,5 @@ prop.played = length( which(time.played != 0) ) / sample.size
 prop.played.se = sqrt( prop.played*(1 - prop.played)/(sample.size - 1) )  * sqrt((pop.size - sample.size) / pop.size)
 
 # Confidence interval for proportion found on slide 39
-error = 1.96*prop.played.se/sqrt.n
+error = 1.96*prop.played.se
 prop.cint = c(prop.played - error,prop.played + error)
