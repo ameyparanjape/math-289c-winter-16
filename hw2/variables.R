@@ -13,4 +13,8 @@ pop.size = 314
 # How many hours played week before survey
 time.played = data$time
 
+# Students who prefer arcade and gamed the week before
+played.arcade = data[ which(data$time != 0 & data$where == 1), ]
 
+# Students who have access to a PC with a CDROM and gamed the week before
+played.pc = data[ which( data$time != 0 & (data$own == 1 | data$home == 1) & data$cdrom == 1), ]
