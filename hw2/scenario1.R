@@ -9,7 +9,10 @@ error = 1.96*prop.played.se
 prop.cint = c(prop.played - error,prop.played + error)
 
 # Proportion of many people who played in week before played at arcade
-prop.arcade = length(played.arcade) / length( which(time.played != 0) )
+prop.arcade = nrow(played.arcade) / length( which(time.played != 0) )
 
 # Proportion of people who played week before that have access to PC with CDROM
-prop.have.PC = length(played.pc)  / length( which(time.played != 0) )
+prop.have.PC = nrow(played.pc)  / length( which(time.played != 0) )
+
+# Of people who said they play semesterly, proportion who played week before
+prop.played.semesterly = nrow( semesterly[which(semesterly$time != 0),] ) / length(semesterly)
