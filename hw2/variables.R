@@ -19,8 +19,8 @@ played.arcade = data[ which(data$time != 0 & data$where == 1), ]
 # Students who have access to a PC with a CDROM and gamed the week before
 played.pc = data[ which( data$time != 0 & (data$own == 1 | data$home == 1) & data$cdrom == 1), ]
 
-# Students who said they play semsterly
+# Students who said they play semesterly
 semesterly = data[which(data$freq == 4),]
 
 # Students who said they play monthly
-semesterly = data[which(data$freq == 4),]
+monthly = data[which(data$freq == 3),]
