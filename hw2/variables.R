@@ -19,7 +19,7 @@ played.arcade = data[ which(data$time != 0 & data$where == 1), ]
 # Students who have access to a PC with a CDROM and gamed the week before
 played.pc = data[ which( data$time != 0 & (data$own == 1 | data$home == 1) & data$cdrom == 1), ]
 
-# Students who said they play semesterly
+# Students who said they play semsterly
 semesterly = data[which(data$freq == 4),]
 
 # Students who said they play monthly
@@ -27,3 +27,16 @@ monthly = data[which(data$freq == 3),]
 
 # Expected grades in class
 expected.grades = data$grade
+
+# Students who said they play weekly
+weekly = data[which(data$freq == 2),]
+
+# Students who said they play daily
+daily = data[which(data$freq == 1),]
+
+# Students who answered a valid answer for freq
+valid = data[which(data$freq != 99),]
+valid = valid[which(valid$busy != 99),]
+
+# Create the boxplot without outliers
+labels <- c("Daily", "Weekly", "Monthly", "Semesterly")
