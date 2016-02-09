@@ -24,3 +24,6 @@ semesterly = data[which(data$freq == 4),]
 
 # Students who said they play monthly
 monthly = data[which(data$freq == 3),]
+
+# Expected grades in class
+expected.grades = data$grade
