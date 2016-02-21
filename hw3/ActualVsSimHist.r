@@ -12,16 +12,16 @@ randDist = data.frame(randDist)
 histData = merge(hcmv,randDist)
 
 # Create a title var for the hist
-title <- "Actual Data vs Simulated Data of Locations of Palindromes in Consecutive Intervals of 4587 Base Pairs"
+title <- "Actual Data vs Simulated Data of Locations of Palindromes in Consecutive Intervals of 5594 Base Pairs"
 
 # Create two histograms and layer them on top of one another
 hist <- ggplot(data = histData) + 
      geom_histogram(aes(x=location, fill = "red"), 
-                    binwidth = 4587, 
+                    binwidth = 5594, 
                     color = "black", 
                     alpha = .35) + 
      geom_histogram(aes(x=randDist, fill = "blue"), 
-                    binwidth = 4587, color = "black", 
+                    binwidth = 5594, color = "black", 
                     alpha = .35) + 
      ggtitle(title) + 
      xlab("locations") + 
