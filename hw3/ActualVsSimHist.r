@@ -63,3 +63,23 @@ intervalMakerFunc = function(binSize) {
 
 }
 
+# Creating barplots for kmeans
+# K-Means++ clustering
+library(NbClust)       #load package
+set.seed(1234)         #set seed for consistent clustering
+
+kmeans = kmeans(hcmv, 57, algorithm="Lloyd")  #use kmeans with Lloyd algorithm
+aggregate(hcmv,by=list(kmeans$cluster),FUN=mean)
+hcmv <- data.frame(hcmv, kmeans$cluster)
+
+##HAVE TO RUN THE ABOVE CODE FOR EACH ONE OF THESE VALUES IN THE VECTOR BELOW
+
+clusterSizes = c(2,3,10,18,23,57)
+for (j in 1:6) {
+  v = vector(mode = "logical", length = 0)
+  lab = rep(1:clusterSizes[j], 1)
+  for (i in 1:clusterSizes[j]) {
+    v[i] = length(which(hcmv[,j+1] == i)) 
+  }
+  barplot(v, names.arg = lab)
+}
