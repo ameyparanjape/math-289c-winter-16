@@ -27,3 +27,39 @@ hist <- ggplot(data = histData) +
      xlab("locations") + 
      scale_fill_manual(name = "Kind", 
                        values =c('blue'='blue','red'='red'), labels = c('Simulated','Actual'))
+                       
+#################### 1st Moment Func ##########################################
+firstMomentFunc = function(set) {
+
+  numE = length(set)            # Get the length of the vector
+  total = 0                     # Set the total recorded to 0
+  for (i in 1:numE) {           # For all elements in the vec
+    total = total + set[i]      # Add curr element to the total
+  }
+  lambdaHat = (total / numE)    # Get x bar (simulated lambda hat)
+  return(lambdaHat)
+
+}
+
+################### Interval Maker ############################################
+intervalMakerFunc = function(binSize) {
+
+  currInterval  = 1                           # Current Interval to add to
+  maxSize       = binSize                     # Max size of current interval
+  realData      <- hcmv[, "location"]          # Get real data in vector form
+  intervals     = data.frame(Ints=integer())  # Create return data frame
+
+  for (i in 1:length(hcmv)) {           # For all elements in the vector
+    num = realData[i]                   # Get current palindrome location
+    if (maxSize < num) {                # if its location is greater than max 
+      currInterval = currInterval + 1   # Move to next interval in df
+      maxSize = maxSize + binSize       # Increase the max for next interval
+    }
+  #intervals[,currInterval] = num        # Assign it to the interval
+
+  }
+
+  return(intervals)  # Return the df with all intervals
+
+}
+
