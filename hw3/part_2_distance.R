@@ -11,15 +11,15 @@ rand_dists = data.frame(rand_dists)
 
 # Plot histograms
 library(ggplot2)
-gg_dists <- ggplot(dists, aes(x=dists))
-gg_rand_dists <- ggplot(rand_dists, aes(rand_dists)) 
+gg_dists <- ggplot(dists, aes(x=dists)) + ylim(0,150)
+gg_rand_dists <- ggplot(rand_dists, aes(rand_dists)) + ylim(0,150)
 
 
 gg_dists + geom_histogram(binwidth = 500) + ggtitle('Distance between consecutive palindromes')
 gg_rand_dists + geom_histogram(binwidth = 500) + ggtitle('Distance between consecutive palindromes of randomly generated data')
 
 # Plot box plots
-boxplot(dists$dists, rand_dists$rand_dists, names=c('Actual', 'Randomly generated'),main="Distance between consecutive palindromes")
+#boxplot(dists$dists, rand_dists$rand_dists, names=c('Actual', 'Randomly generated'),main="Distance between consecutive palindromes")
 
 #############################
 # Repeat for triples
@@ -34,16 +34,26 @@ rand_dists_three = data.frame(rand_dists_three)
 
 # Plot histograms
 library(ggplot2)
-gg_dists_three <- ggplot(dists_three, aes(x=dists_three))
-gg_rand_dists_three <- ggplot(rand_dists_three, aes(rand_dists_three))
+gg_dists_three <- ggplot(dists_three, aes(x=dists_three)) + ylim(0,70)
+gg_rand_dists_three <- ggplot(rand_dists_three, aes(rand_dists_three)) + ylim(0,70)
 
 gg_dists_three + geom_histogram(binwidth = 500) + ggtitle('Distance between 3 consecutive palindromes')
 gg_rand_dists_three + geom_histogram(binwidth = 500) + ggtitle('Distance between 3 consecutive palindromes of randomly generated data')
 
 # Plot box plots
-boxplot(dists_three$dists_three, rand_dists_three$rand_dists_three, names=c('Actual', 'Randomly generated'),main="Distance between 3 consecutive palindromes")
+#boxplot(dists_three$dists_three, rand_dists_three$rand_dists_three, names=c('Actual', 'Randomly generated'),main="Distance between 3 consecutive palindromes")
 
+# line plots for two
+plot(dists$dists, ylab = "Distance", main = "Distance between consecutive palindromes", type='c')
+lines(dists$dists)
 
+plot(rand_dists$rand_dists, ylab = "Distance", main = "Distance between consecutive palindromes\nSimulated random data", type='c')
+lines(rand_dists$rand_dists)
 
+# Line plots for 3
+plot(dists_three$dists_three, ylab = "Distance", main = "Distance between 3 consecutive palindromes", type='c')
+lines(dists_three$dists_three)
 
+plot(rand_dists_three$rand_dists_three, ylab = "Distance", main = "Distance between 3 consecutive palindromes\nSimulated random data", type='c')
+lines(rand_dists_three$rand_dists_three)
 
