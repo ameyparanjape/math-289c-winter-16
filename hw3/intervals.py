@@ -6,6 +6,7 @@ plt.style.use('ggplot')
 n_col = 2
 lengh_dna = 229354
 intervals = [4587,5090,5594]
+intervals = [2000,3000,7000,8000]
 fig,ax = plt.subplots(len(intervals),n_col,sharex=True,sharey=True)
 
 data = np.loadtxt("data.txt",skiprows=1)
