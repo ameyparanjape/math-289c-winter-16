@@ -1,5 +1,5 @@
 library(plyr)
-setwd("/home/abhijit331/Dropbox/Math 289")
+#setwd("/home/abhijit331/Dropbox/Math 289")
 setwd("C:/Users/abhijit331/Dropbox/Math 289")
 dat = read.csv("dmv.txt")
 head(dat)
@@ -14,56 +14,73 @@ counts["9"] = sum(counts[9:length(counts)])
 counts = counts[3:8]
 c = counts
 # bin size = 5594
+
+#Poisson
 lambda = 296/41
-prob = c()
-prob[1] = exp(-lambda)*(1+lambda + lambda^2/2+lambda^3/factorial(3)+lambda^4/factorial(4))
+prob.poisson = c()
+prob.poisson[1] = exp(-lambda)*(1+lambda + lambda^2/2+lambda^3/factorial(3)+lambda^4/factorial(4))
 for(i in 5:8)
 {
-  prob[i-3] = exp(-lambda)*(lambda^i/factorial(i))
+  prob.poisson[i-3] = exp(-lambda)*(lambda^i/factorial(i))
 }
-prob[6] = 1-sum(prob[1:5])
-counts = cbind(counts,41*prob)
+prob.poisson[6] = t = exp(-lambda)*(lambda^9/factorial(9)+lambda^10/factorial(10)+lambda^11/factorial(11)+lambda^14/factorial(14)+lambda^19/factorial(19))
+#1-sum(prob[1:5])
+counts = cbind(counts,41*prob.poisson)
 counts[,2] = round(counts[,2],1)
 #dcs = chisq.test(counts[,1],p = prob)
-sums = 0
+sum.poisson = 0
 for (i in 1:dim(counts)[1])
 {
-  sums = sums + ((counts[i,1] - counts[i,2])^2)/counts[i,2]
+  sum.poisson = sum.poisson + ((counts[i,1] - counts[i,2])^2)/counts[i,2]
 }
-pvalPoisson = 1 - pchisq(sums,df = 4)
+1 - pchisq(sum.poisson, df = 4)
+qqplot(counts[,1],counts[,2],main = " Observed vs Expected values from \n Poisson Distribution",xlab ="Observed",ylab="Expected")
+abline(0,1)
+
 
 ## Exponential distribution 
-prob2 = c()
+prob.exp = c()
 lambda = 41/296
-prob2[1] = 1-exp(-4*lambda)
+prob.exp[1] = 1-exp(-4*lambda)
 for(i in 5:8)
 {
-  prob2[i-3] = exp(-lambda*(i-1)) - exp(-lambda*i)
+  prob.exp[i-3] = exp(-lambda*(i-1)) - exp(-lambda*i)
 }
-prob2[6] = 1- (1-exp(-8*lambda))
-counts = cbind(counts,41*prob2)
-colnames(counts) = c("observed","poisson","exponential")
-sumsExp = 0
+prob.exp[6] = 1- (1-exp(-8*lambda))
+counts = cbind(counts,41*prob.exp)
+sum.exp = 0
 for (i in 1:dim(counts)[1])
 {
-  sumsExp = sumsExp + ((counts[i,1] - counts[i,3])^2)/counts[i,3]
+  sum.exp = sum.exp + ((counts[i,1] - counts[i,3])^2)/counts[i,3]
 }
+1 -pchisq(sum.exp,df = 4)
 
-sum(prob2)
+qqplot(counts[,1],counts[,3],main = " Observed vs Expected values from \n Exponential Distribution",xlab ="Observed",ylab="Expected")
+abline(0,1)
 
 
+# Gamma distribution 
 
-# Uniform dist 
-counts = cbind(counts,rep(7.22,6))
-colnames(counts) = c("Observed","Poisson","Exponential","Uniform")
-# dat$bin2 = as.integer(dat[,1]/5594) + 1
-# tab = count(dat$bin2)
-# counts2 = table(as.matrix(tab$freq))
-# #tab$exp = rep(29.6,97)
-sums2 = 0
-for (i in 1:dim(counts)[1])
+prob.gamma = c()
+lambda = 296/41
+prob.gamma[1] = pgamma(4,shape = 2, scale = lambda/2)
+sumsgamma = 0
+for(i in 5:8)
 {
-  sums2 = sums2 + ((counts[i,1] - counts[i,4])^2)/counts[i,4]
+  prob.gamma[i-3] = pgamma(i,shape = 2, scale = lambda/2) - pgamma(i-1, shape = 2, scale = lambda/2)
 }
-sums2
-# chisq.test(tab[,2])
+prob.gamma[6] = 1 - pgamma(8,shape = 2, scale = lambda/2)
+counts = cbind(counts,41*prob.gamma)
+colnames(counts) = c("Observed","Poisson","Exponential","Gamma")
+sum.gamma = 0
+for(i in 1:dim(counts)[1])
+{
+  sum.gamma = sum.gamma+((counts[i,1] - counts[i,4])^2)/counts[i,4]
+}
+1 - pchisq(sum.gamma , df = 3)
+qqplot(counts[,1],counts[,4],main = " Observed vs Expected values from \n Gamma Distribution",xlab ="Observed",ylab="Expected")
+abline(0,1)
+
+
+
+
