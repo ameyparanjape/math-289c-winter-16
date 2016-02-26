@@ -78,9 +78,10 @@ avg = mean(dists_three[,1])
 
 gamma.dist.freqs = c()
 for(i in 1:10) {
-  gamma.dist.freqs[i] = 295*( pgamma(i*500,shape=2, scale=avg/2) - pgamma((i-1)*500,shape = 2,scale=avg/2))
+  gamma.dist.freqs[i] = pgamma(i*500,shape=2, scale=avg/2) - pgamma((i-1)*500,shape = 2,scale=avg/2)
 }
-gamma.dist.freqs
+gamma.dist.freqs[10] = 1 - sum(gamma.dist.freqs[1:9])
+gamma.dist.freqs = 295*gamma.dist.freqs
 
 # get chi-squared statistic
 chisq = 0
@@ -89,6 +90,7 @@ for(i in 1:10) {
 }
 pchisq(chisq, df=7)
 
+######################
 # Run chisq for exponential distribution
 freq.data = hist(dists[,1])
 dist.freqs = freq.data$counts
@@ -101,8 +103,10 @@ avg = mean(dists[,1])
 
 exp.dist.freqs = c()
 for(i in 1:8) {
-  exp.dist.freqs[i] = 295*( pexp(i*500,rate=avg) - pexp((i-1)*500,rate=avg))
+  exp.dist.freqs[i] = pexp(i*500,rate=1/avg) - pexp((i-1)*500,rate=1/avg)
 }
+exp.dist.freqs[8] = 1 - sum(exp.dist.freqs[1:7])
+exp.dist.freqs = 295*exp.dist.freqs
 
 chisq = 0
 for(i in 1:8) {
