@@ -82,5 +82,8 @@ qqplot(counts[,1],counts[,4],main = " Observed vs Expected values from \n Gamma 
 abline(0,1)
 
 
+#Calculating the power of the chi square tests for different distribution
 
-
+power.poisson = pwr.chisq.test(w = sqrt(sum.poisson),N = 6,df = 4)
+power.exp = pwr.chisq.test(w = sqrt(sum.exp),N = 6,df = 4)
+power.gamma = pwr.chisq.test(w = sqrt(sum.gamma),N = 6,df = 3)
