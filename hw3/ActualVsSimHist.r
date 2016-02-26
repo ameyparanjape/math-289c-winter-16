@@ -27,6 +27,7 @@ hist <- ggplot(data = histData) +
      xlab("locations") + 
      scale_fill_manual(name = "Kind", 
                        values =c('blue'='blue','red'='red'), labels = c('Simulated','Actual'))
+hist
                        
 #################### 1st Moment Func ##########################################
 firstMomentFunc = function(set) {
@@ -41,27 +42,20 @@ firstMomentFunc = function(set) {
 
 }
 
-################### Interval Maker ############################################
-intervalMakerFunc = function(binSize) {
+# Standardized Residual Graphing Code 
+stdResMax = c(0, 0.0424, 0, 1.1797, 0)
+stdResMin = c(-0.1234, 0, -0.3717, 0, -0.1006)
+stdResX = c("0-4", "5", "6", "7", "8+")
+stdRes = ggplot() + geom_errorbar( aes(x=stdResX, ymax=stdResMax, ymin=stdResMin))
+stdRes + labs(x="Palindrome Count", y="Standardized Residual")
 
-  currInterval  = 1                           # Current Interval to add to
-  maxSize       = binSize                     # Max size of current interval
-  realData      <- hcmv[, "location"]          # Get real data in vector form
-  intervals     = data.frame(Ints=integer())  # Create return data frame
 
-  for (i in 1:length(hcmv)) {           # For all elements in the vector
-    num = realData[i]                   # Get current palindrome location
-    if (maxSize < num) {                # if its location is greater than max 
-      currInterval = currInterval + 1   # Move to next interval in df
-      maxSize = maxSize + binSize       # Increase the max for next interval
-    }
-  #intervals[,currInterval] = num        # Assign it to the interval
-
-  }
-
-  return(intervals)  # Return the df with all intervals
-
-}
+stdResMax = c(0, 0, 0.4411, 0.0735, 0.4411, 0.2573, 0, 0.4411, 0.8087, 0)
+stdResMin = c(-0.1103, -1.5807, 0, 0, 0, 0, -0.2941, 0, 0, -0.4779)
+stdResX = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+stdResX = as.factor(stdResX)
+stdRes = ggplot() + geom_errorbar( aes(x=stdResX, ymax=stdResMax, ymin=stdResMin))
+stdRes + labs(x="Palindrome Count", y="Standardized Residual")
 
 # Creating barplots for kmeans
 # K-Means++ clustering
