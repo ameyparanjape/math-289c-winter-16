@@ -57,3 +57,56 @@ lines(dists_three$dists_three)
 plot(rand_dists_three$rand_dists_three, ylab = "Distance", main = "Distance between 3 consecutive palindromes\nSimulated random data", type='c')
 lines(rand_dists_three$rand_dists_three)
 
+############ Run chisq test for gamma distribution #########################
+# break dists into frequency table, bin size is 5000
+dist.freqs = c()
+
+# 0-500
+#dist.freqs[1] = count( which(as.integer(dists[,1]/500) == 0) )
+
+# create frequency list with bins of size 500
+freq.data = hist(dists_three[,1])
+dist.freqs = freq.data$counts
+
+# Combine last 3 bins
+dist.freqs[10] = sum(dist.freqs[10], dist.freqs[11], dist.freqs[12])
+dist.freqs = dist.freqs[1:10]
+# dist.freqs now holds counts of distances that are 0-500, 500-1000, 1000-1500, 1500-2000, ... 5000+
+
+# Create gamma distribution table
+avg = mean(dists_three[,1])
+
+gamma.dist.freqs = c()
+for(i in 1:10) {
+  gamma.dist.freqs[i] = 295*( pgamma(i*500,shape=2, scale=avg/2) - pgamma((i-1)*500,shape = 2,scale=avg/2))
+}
+gamma.dist.freqs
+
+# get chi-squared statistic
+chisq = 0
+for(i in 1:10) {
+ chisq = chisq + ((gamma.dist.freqs[i] - dist.freqs[i])^2)/gamma.dist.freqs[i]  
+}
+pchisq(chisq, df=7)
+
+# Run chisq for exponential distribution
+freq.data = hist(dists[,1])
+dist.freqs = freq.data$counts
+
+# combine last 4 bins
+dist.freqs[8] = sum(dist.freqs[8:11])
+dist.freqs = dist.freqs[1:8]
+
+avg = mean(dists[,1])
+
+exp.dist.freqs = c()
+for(i in 1:8) {
+  exp.dist.freqs[i] = 295*( pexp(i*500,rate=avg) - pexp((i-1)*500,rate=avg))
+}
+
+chisq = 0
+for(i in 1:8) {
+  chisq = chisq + ((exp.dist.freqs[i] - dist.freqs[i])^2)/exp.dist.freqs[i]  
+}
+pchisq(chisq, df=6)
+
