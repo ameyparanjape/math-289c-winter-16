@@ -65,7 +65,7 @@ dist.freqs = c()
 #dist.freqs[1] = count( which(as.integer(dists[,1]/500) == 0) )
 
 # create frequency list with bins of size 500
-freq.data = hist(dists_three[,1])
+freq.data = hist(dists_three[,1], xlab = "Distance", main="Distance between 3 consecutive palindromes")
 dist.freqs = freq.data$counts
 
 # Combine last 3 bins
@@ -81,7 +81,16 @@ for(i in 1:10) {
   gamma.dist.freqs[i] = pgamma(i*500,shape=2, scale=avg/2) - pgamma((i-1)*500,shape = 2,scale=avg/2)
 }
 gamma.dist.freqs[10] = 1 - sum(gamma.dist.freqs[1:9])
-gamma.dist.freqs = 295*gamma.dist.freqs
+gamma.dist.freqs = 294*gamma.dist.freqs
+
+# plot gamma dist on histograms
+gamma.df = c()
+gamma.df$y = gamma.dist.freqs[1:9]
+gamma.df$x = freq.data$breaks[1:9]
+gamma.df$x = gamma.df$x + 250
+
+points(gamma.df$x, gamma.df$y, col='red')
+lines(gamma.df$x, gamma.df$y, col='red')
 
 # get chi-squared statistic
 chisq = 0
@@ -92,7 +101,7 @@ pchisq(chisq, df=7)
 
 ######################
 # Run chisq for exponential distribution
-freq.data = hist(dists[,1])
+freq.data = hist(dists[,1], xlab = "Distance", main="Distance between 2 consecutive palindromes")
 dist.freqs = freq.data$counts
 
 # combine last 4 bins
@@ -107,6 +116,15 @@ for(i in 1:8) {
 }
 exp.dist.freqs[8] = 1 - sum(exp.dist.freqs[1:7])
 exp.dist.freqs = 295*exp.dist.freqs
+
+# plot exp fit
+exp.df = c()
+exp.df$y = exp.dist.freqs[1:7]
+exp.df$x = freq.data$breaks[1:7]
+exp.df$x = exp.df$x + 250
+
+points(exp.df$x, exp.df$y, col='red')
+lines(exp.df$x, exp.df$y, col='red')
 
 chisq = 0
 for(i in 1:8) {
