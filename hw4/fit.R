@@ -6,15 +6,15 @@ gauge['ln.gain'] = log(gauge['gain'])
 gauge.avg = aggregate( gauge[,2:3], list(gauge$density), mean)
 
 # Plot raw data
-plot(gauge[,'gain'], gauge[,'density'])
+plot(gauge[,'density'], gauge[,'gain'])
 
 # Plot logged data
-plot(gauge[,'ln.gain'], gauge[,'density'])
+plot(gauge[,'density'], gauge[,'ln.gain'])
 
 # Plot data averaged into groups of 10
-plot(gauge.avg[,'gain'], gauge.avg[,1])
+plot(gauge.avg[,1], gauge.avg[,'gain'])
 
 # Plot data with logged gains averaged into groups of 10
-plot(gauge.avg[,'ln.gain'], gauge.avg[,1])
+plot(gauge.avg[,1], gauge.avg[,'ln.gain'])
 
 fit = lm(density ~ ln(gain), data = gauge)
