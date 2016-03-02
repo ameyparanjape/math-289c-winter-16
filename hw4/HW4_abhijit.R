@@ -14,3 +14,5 @@ for(i in 0:6)
   gauge$avg.gain[i+1] = sum(gauge$gain[temp])/length(which(z == i))
 }
 gauge.new = data.frame(density = (0:6)/10,avg.gain = gauge$avg.gain[1:7])
+
+plot(gauge.new)
