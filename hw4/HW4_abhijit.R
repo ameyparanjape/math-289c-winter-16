@@ -1,18 +1,16 @@
 setwd("C:/Users/abhijit331/Dropbox/Math 289")
-gauge = read.table("gauge.txt", header = T)
-head(gauge)
+gauge = read.table("gauge.txt",header = T)
 gauge$gain = log(gauge$gain)
-head(gauge)
-plot(gauge)
-fit = lm()
 
-gauge$avg.gain  = 0
-z = trunc(gauge$density * 10)
-for(i in 0:6)
-{
-  temp = which(z == i)
-  gauge$avg.gain[i+1] = sum(gauge$gain[temp])/length(which(z == i))
-}
-gauge.new = data.frame(density = (0:6)/10,avg.gain = gauge$avg.gain[1:7])
+gauge.avg = aggregate(gauge[,2], list(gauge$density), mean)
+colnames(gauge.avg) = c("density","gain")
+fit = lm(gain ~ density, data = gauge.avg)
+plot(gauge.avg$density,gauge.avg$gain)
+abline(fit$coefficients[1],fit$coefficients[2])
 
-plot(gauge.new)
+
+
+# Q4
+fit.quad =lm(gain ~ poly(density,2,raw = TRUE),data = gauge.avg)
+seq.values = seq(0,0.7,0.01)
+predict.val = predict(fit.quad,list(density = seq.values,dne))
