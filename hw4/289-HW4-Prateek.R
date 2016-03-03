@@ -52,3 +52,5 @@ plot_conf_band = function(x, y, p){
     geom_line(aes(y=ycap, x=x), col="red") +
     geom_polygon(aes(x=c(temp_tablesort$x,rev(temp_tablesort$x)),y=c(temp_tablesort$lower,rev(temp_tablesort$upper))), col="green", fill="green", alpha=0.5)
 }
+
+plot_conf_band()
