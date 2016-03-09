@@ -15,3 +15,5 @@ train_test = train[50001:dim(train)[1],-1]
 rf = randomForest(as.factor(target) ~ .,data = train_train )
 pred = predict(rf,train_test)
 length(which(pred == labels))/dim(train_test)[1]
+# 77% correct classification on the Validation set. Data is trained on 50k datapoints, with 130 variables 
+# included in the training set. 
