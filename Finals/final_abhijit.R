@@ -12,11 +12,13 @@ fillNA <- function(S)
 train = read.csv("train.csv", header = TRUE)
 train1 = train
 fac = which(lapply(train,class)=="factor")
-temp = c(24,58,127)
+factor = train[,fac]
+factor = factor[,-c(2,8,19)]
 train = train[,-fac]
 train = train[,-1]
 train = data.frame(lapply(train,fillNA))
-#figure out the columns which are factor 
+# add back the factor terms
+train = cbind(train,factor)
 
 
 train_train = train[1:100000,]
@@ -31,7 +33,8 @@ length(which(pred == labels))/dim(train_test)[1]
 test = read.csv("test.csv", header = T)
 ttest = test
 fac2 = which(lapply(test,class)=="factor")
-temp = c(23,57,126)
+factor.test = test[,fac2]
+factor.test = factor.test[,-c]
 test = test[,-temp]
 test = test[,-1]
 test = data.frame(lapply(test,fillNA))
