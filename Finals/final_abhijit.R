@@ -58,6 +58,12 @@ test$target = -1
 test$target = predict(rf,test)
 
 # SVM 
+
+svm.radial = svm(as.factor(target) ~ . , data = train_train,type = "eps",kernel = "radial" ) 
+pred.svm = predict(svm.radial,train_test)
+length(which(pred.svm == labels))/dim(train_test)[1]
+
+# Parallel shit
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
 registerDoParallel(cores=numCore)
