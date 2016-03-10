@@ -6,6 +6,7 @@ library(doParallel)
 library(zoo)
 library(randomForest)
 library(e1071)
+library(parallelSVM)
 ####
 fillNA <- function(S) 
 {
@@ -36,12 +37,6 @@ begTime <- Sys.time()
 random.forest <- foreach(ntree=rep(rep, numCore), .combine=combine,
               .packages="randomForest") %dopar%
   randomForest(as.factor(target) ~ . , data = train_train,ntree = ntree,mtry = 10,importance = T,replace = F)
-#       randomForest(X.sub, y.sub,
-#                   ntree=ntree#                   mtry=10,
-#                   importance=TRUE,
-#                   na.action=na.roughfix, #can also use na.action = na.omit
-#                   replace=FALSE)
-
 
 #rf = randomForest(as.factor(target) ~ .,data = train_train )
 pred = predict(random.forest,train_test)
@@ -66,16 +61,16 @@ test$target = predict(rf,test)
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
 registerDoParallel(cores=numCore)
-begtimesvm <- Sys.time()
-model.svm =foreach(ntree=rep(rep, numCore), .combine=combine,
-                         .packages="e1071") %dopar%
-  svm(as.factor(target) ~ . , data = train_train)
-runtimesvm = Sys.time() - begtimesvm
-#       randomForest(X.sub, y.sub,
-#                   ntree=ntree#                   mtry=10,
-#                   importance=TRUE,
-#                   na.action=na.roughfix, #can also use na.action = na.omit
-#                   replace=FALSE)
 
+begin = Sys.time()
+model.svm = parallelSVM(as.factor(target) ~ .,data = train_train,numberCores = detectCores(),samplingSize = 0.2,probability = T,gamma = 0.1,cost = 10)
+end = Sys.time() - begin
+end
 
+cl = makeCluster(4)
+split = sort(rank(1:nrow(train_test))%%4)
+svm.prediction = foreach(i = unique(split),.combine = combine,.packages = c("e1071")) %dopar%{
+  as.numeric(predict(model.svm,newdata=train_test[splits==i,]))
+}
+stopCluster(cl)
 
