@@ -66,6 +66,7 @@ pred.svm = predict(svm.radial,train_test)
 length(which(pred.svm == labels))/dim(train_test)[1]
 end = Sys.time()-begin
 end
+# ~ 3 hours execution time. 
 
 # Parallel shit
 ntree = 100; numCore = 4
