@@ -71,12 +71,21 @@ end
 # Parallel shit
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
-registerDoParallel(cores=numCore)
 
+cl = makeCluster(4)
+registerDoParallel(cores=numCore)
+getDoParWorkers()
+z = c()
+dummy = train_train[1:10000,]
 begin = Sys.time()
-model.svm = parallelSVM(as.factor(target) ~ .,data = train_train,numberCores = detectCores(),samplingSize = 0.2,probability = T,gamma = 0.1,cost = 10)
+model.svm = parallelSVM(as.factor(target) ~ .,data =dummy,numberCores = detectCores(),probability = T)
 end = Sys.time() - begin
 end
+stopCluster(cl)
+registerDoSEQ()
+z =c(z,end*60)
+
+
 
 cl = makeCluster(4)
 split = sort(rank(1:nrow(train_test))%%4)

@@ -1,4 +1,5 @@
-setwd("C:/Users/abhijit331/Dropbox/Math 289")
+#setwd("C:/Users/abhijit331/Dropbox/Math 289")
+setwd("/home/abhijit331/Dropbox/Math 289")
 gauge = read.table("gauge.txt",header = T)
 gauge$log.gain = log(gauge$gain)
 
