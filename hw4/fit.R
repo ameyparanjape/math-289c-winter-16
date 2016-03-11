@@ -55,9 +55,32 @@ abline(0,0)
 plot(gauge.avg[,1], residuals, main = "Density vs. Residuals of ln(gain)", xlab = "Density",
      ylab = "Residual")
 abline(0,0)
+resid.plot =  ggplot(gauge.avg, aes(gauge.avg[,1], residuals)) +
+              geom_point(shape=1, colour="blue") +
+              ylab("Residual") +
+              xlab("Density") +
+              ggtitle("Density vs. Residuals of ln(gain)") + 
+              geom_hline(aes(0,0), yintercept = 0)
+resid.plot
 
+resid.plot.2 =  ggplot(gauge.avg, aes(gauge.avg[,"ln.gain"], residuals)) +
+  geom_point(shape=1, colour="blue") +
+  ylab("Residual") +
+  xlab("ln(gain)") +
+  ggtitle("ln(gain) vs. Residuals of ln(gain)") + 
+  geom_hline(aes(0,0), yintercept = 0)
+resid.plot.2
+
+
+#residuals = as.vector(residuals)
+resid.hist =    ggplot(fit, aes(fit$residuals)) + geom_histogram(bins = 3) + xlab("Residual value")
+                
+resid.hist
 
 #fit = lm(gauge.avg[,'ln.gain'] ~ gauge.avg[,1], data = gauge.avg)
 ln.fit = lm(gauge[,'ln.gain'] ~ gauge[,1], data = gauge)
 plot(gauge[,3], ln.fit$residuals)
 abline(0,0)
+
+ln.resid.hist =   ggplot(ln.fit, aes(ln.fit$residuals)) + geom_histogram(bins = 9)
+ln.resid.hist
