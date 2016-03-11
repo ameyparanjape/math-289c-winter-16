@@ -56,12 +56,16 @@ test = test[,-1]
 test = data.frame(lapply(test,fillNA))
 test$target = -1
 test$target = predict(rf,test)
+pred = predict(random.forest,train_test)
+length(which(pred == labels))/dim(train_test)[1]
 
 # SVM 
-
-svm.radial = svm(as.factor(target) ~ . , data = train_train,type = "eps",kernel = "radial" ) 
+begin = Sys.time()
+svm.radial = svm(as.factor(target) ~ . , data = train_train,type = "C-classification",kernel = "radial" ) 
 pred.svm = predict(svm.radial,train_test)
 length(which(pred.svm == labels))/dim(train_test)[1]
+end = Sys.time()-begin
+end
 
 # Parallel shit
 ntree = 100; numCore = 4
