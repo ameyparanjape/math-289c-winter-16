@@ -83,4 +83,3 @@ svm.prediction = foreach(i = unique(split),.combine = combine,.packages = c("e10
   as.numeric(predict(model.svm,newdata=train_test[splits==i,]))
 }
 stopCluster(cl)
-
