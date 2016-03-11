@@ -31,6 +31,18 @@ lm3.avg = lm(density~log.gain, data=avg.gauge)
 new.density = data.frame(density=c(log(38.6),log(426.7)))
 predict(lm3.avg, newdata = new.density)
 
+# PREDICTION FOR FULL
+lm4 = lm(density~log.gain, data = gauge)
+new.gain.full = data.frame(log.gain=c(log(38.6),log(426.7)))
+predict(lm4, newdata = new.gain.full)
+
+# LAD
+library(quantreg)
+lad4 = rq(density~log.gain, data = gauge)
+predict(lad4, newdata = new.gain.full)
+lad4.avg = rq(density~log.gain, data = avg.gauge)
+predict(lad4, newdata = new.gain.full)
+
 # PUT BANDS AROUND IT
 plot_conf_band = function(x, y, p, title, xlabel, ylabel){
   # Create Vandermonde matrix
@@ -61,5 +73,6 @@ plot_conf_band = function(x, y, p, title, xlabel, ylabel){
     geom_point(aes(x=x, y=y), col="red")+
     geom_polygon(aes(x=c(temp_tablesort$x,rev(temp_tablesort$x)),y=c(temp_tablesort$lower,rev(temp_tablesort$upper))), col="green", fill="green", alpha=0.5)
 }
+
 
 plot_conf_band(gauge$gain, gauge$density, 1, title = "Density vs Log of Gain", xlabel = "Log of Gain", ylabel = "Density")
