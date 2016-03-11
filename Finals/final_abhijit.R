@@ -72,11 +72,11 @@ end
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
 
-cl = makeCluster(4)
-registerDoParallel(cores=numCore)
-getDoParWorkers()
 z = c()
-dummy = train_train[1:10000,]
+cl = makeCluster(4)
+registerDoParallel(cl)
+getDoParWorkers()
+dummy = train_train[1:100000,]
 begin = Sys.time()
 model.svm = parallelSVM(as.factor(target) ~ .,data =dummy,numberCores = detectCores(),probability = T)
 end = Sys.time() - begin
@@ -84,6 +84,11 @@ end
 stopCluster(cl)
 registerDoSEQ()
 z =c(z,end*60)
+
+train_test = train_train[100001:dim(train)[1],]
+lab = train_train[100001:dim(train)[1],1]
+predict.svm = predict(model.svm,train_test)
+length(which(pred.svm == labels))/dim(train_test)[1]
 
 
 
