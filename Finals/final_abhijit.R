@@ -1,4 +1,5 @@
 #setwd("C:/Users/abhijit331/Desktop/289 Finals")
+load("~/Desktop/Math 289/.RData")
 setwd("/home/abhijit331/Desktop/Math 289")
 #install.packages("zoo")
 #install.packages("doParallel")
@@ -68,7 +69,7 @@ end = Sys.time()-begin
 end
 # ~ 3 hours execution time. 
 
-# Parallel shit
+# Parallel
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
 
@@ -93,8 +94,10 @@ length(which(pred.svm == labels))/dim(train_test)[1]
 
 
 cl = makeCluster(4)
+registerDoParallel(cl)
 split = sort(rank(1:nrow(train_test))%%4)
-svm.prediction = foreach(i = unique(split),.combine = combine,.packages = c("e1071")) %dopar%{
-  as.numeric(predict(model.svm,newdata=train_test[splits==i,]))
-}
+svm.prediction = foreach(i = unique(split),.combine = combine,.packages = c("e1071")) %dopar%
+  {as.numeric(predict(model.svm,newdata=train_test[split==i,]))}
 stopCluster(cl)
+registerDoSEQ()
+length(which(svm.prediction == labels))/dim(train_test)[1]
