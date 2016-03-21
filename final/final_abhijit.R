@@ -87,7 +87,7 @@ length(which(pred.svm == labels))/dim(train_test)[1]
 
 # ~ 3 hours execution time. 
 
-# Parallel
+# Parallel SVM
 ntree = 100; numCore = 4
 rep <- ntree/numCore # tree / numCore
 
@@ -110,7 +110,7 @@ predict.svm = predict(model.svm,train_test)
 length(which(pred.svm == labels))/dim(train_test)[1]
 
 
-
+# Parallel Prediction SVM
 cl = makeCluster(4)
 registerDoParallel(cl)
 split = sort(rank(1:nrow(train_test))%%4)
