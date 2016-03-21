@@ -123,18 +123,17 @@ length(which(svm.prediction == labels))/dim(train_test)[1]
 
 
  
-
-dum = train[1:10000,-1]
-la = train[1:10000,1]
-param <- list("objective" = "multi:softprob",    # multiclass classification 
-               # number of classes 
-              "eval_metric" = "merror",    # evaluation metric 
-              "nthread" = 8,   # number of threads to be used 
-              "max_depth" = 16,    # maximum depth of tree 
-              "eta" = 0.3,    # step size shrinkage 
-              "gamma" = 0,    # minimum loss reduction 
-              "subsample" = 1,    # part of data instances to grow tree 
-              "colsample_bytree" = 1,  # subsample ratio of columns when constructing each tree 
-              "min_child_weight" = 12  # minimum sum of instance weight needed in a child 
-)
-xgb = xgboost(param = param,data = dum,label = la,nfold = 4,prediction = T,verbose = F)
+# Extreme Gradient Boosting
+dum = train[1:100000,-1]
+la = train[1:100000,1]
+dumtest = train[100001:110000,-1]
+spar2 = sparse.model.matrix(~.,data = dumtest)
+latest = train[100001:110000,1]
+spar = sparse.model.matrix(~.,data = dum)
+xgb.model = xgboost(data = spar,label =as.factor(la),max_depth = 9,eta = 1 , nthread = 4,nround = 10,onjective = "binary:logistic")
+impo =xgb.importance(feature_names = spar@Dimnames[[2]],model = xgb.model)
+testp = predict(xgb.model,newdata = spar2)
+testp=ifelse(testp > 0.5,1,0)
+length(which(testp == latest))
+head(testp)
+head(latest)
