@@ -100,7 +100,7 @@ z = c()
 cl = makeCluster(4)
 registerDoParallel(cl)
 getDoParWorkers()
-dummy = train[1:20000,]
+dummy = train[1:50000,]
 begin = Sys.time()
 model.svm = parallelSVM(as.factor(target) ~ .,data =dummy,numberCores = detectCores())
 end = Sys.time() - begin
@@ -123,9 +123,9 @@ train = read.csv("train.csv", header = TRUE)
 train = train[sample(1:nrow(train)),]
 train = data.frame(lapply(train,replaceNA))
 train = train[,-1]
-dum = train[1:10000,-1]
-la = train[1:10000,1]
- dumtest = train[10001:20000,-1]
+dum = train[1:100000,-1]
+la = train[1:100000,1]
+ dumtest = train[100001:nrow(train),-1]
  spar2 = sparse.model.matrix(~.,data = dumtest)
 latest = train[10001:20000,1]
 spar = sparse.model.matrix(~.,data = dum)
@@ -149,11 +149,11 @@ reduced.dataset = train[,c("target",features)]
 head(reduced.dataset)
 dim(reduced.dataset)
 
-features.dum = reduced.dataset[1:10000,-1]
-features.la = reduced.dataset[1:10000,1]
-features.dumtest = reduced.dataset[10001:20000,-1]
+features.dum = reduced.dataset[1:20000,-1]
+features.la = reduced.dataset[1:20000,1]
+features.dumtest = reduced.dataset[20001:30000,-1]
 features.spar2 = sparse.model.matrix(~.,data = features.dumtest)
-features.latest = reduced.dataset[10001:20000,1]
+features.latest = reduced.dataset[20001:30000,1]
 features.spar = sparse.model.matrix(~.,data = features.dum)
 features.xgb.model = xgboost(data = features.spar,label =as.factor(features.la),max_depth = 9,eta = 1 , nthread = 4,nround = 10,onjective = "binary:logistic")
 features.impo =xgb.importance(feature_names = features.spar@Dimnames[[2]],model = features.xgb.model)
