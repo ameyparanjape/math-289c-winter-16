@@ -49,6 +49,3 @@ for(i in 1:ncol(train_filled_3)) {
     train_filled_3[,i] = replace.mode(train_filled_3[,i])
   }
 }
-
-
-# df$value[is.na(df$value)] <- median(df$value, na.rm=TRUE)
