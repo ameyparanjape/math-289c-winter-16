@@ -80,14 +80,14 @@ test$target = predict(rf,test)
 pred = predict(random.forest,train_test)
 length(which(pred == labels))/dim(train_test)[1]
 
-# SVM 
-dummy = train[1:10000,]
-begin = Sys.time()
-svm.radial = svm(as.factor(target) ~ . , data = dummy,type = "C-classification",kernel = "radial" ) 
-end = Sys.time()-begin
-end
-pred.svm = predict(svm.radial,train_test)
-length(which(pred.svm == labels))/dim(train_test)[1]
+# # SVM 
+# dummy = train[1:10000,]
+# begin = Sys.time()
+# svm.radial = svm(as.factor(target) ~ . , data = dummy,type = "C-classification",kernel = "radial" ) 
+# end = Sys.time()-begin
+# end
+# pred.svm = predict(svm.radial,train_test)
+# length(which(pred.svm == labels))/dim(train_test)[1]
 
 # ~ 3 hours execution time. 
 
