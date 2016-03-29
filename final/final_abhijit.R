@@ -13,13 +13,14 @@ library(MASS)
 library(randomForest)
 library(e1071)
 library(parallelSVM)
-####
-replaceNA = function(s)
-{
-  ifelse(is.na(s),-999,s)
-}
+####To replace NAs with the nearest non NA neighbour
+# replaceNA = function(s)
+# {
+#   ifelse(is.na(s),-999,s)
+# }
 train = read.csv("train.csv", header = TRUE)
-train = train[complete.cases(train),]
+train = train[sample(1:nrow(train)),]
+#train = train[complete.cases(train),]
 train1 = train
 fillNA <- function(S)
 {
@@ -32,7 +33,7 @@ counts = c()
 for(i in 1:dim(train1)[1])
 {
   counts = c(counts,length(which(is.na(train1[i,]) == TRUE)))
-  
+
 }
 ###
 
@@ -119,6 +120,7 @@ length(which(predict.svm == lab))/10000
  
 # Extreme Gradient Boosting
 train = read.csv("train.csv", header = TRUE)
+train = train[sample(1:nrow(train)),]
 train = data.frame(lapply(train,replaceNA))
 train = train[,-1]
 dum = train[1:10000,-1]
@@ -141,6 +143,7 @@ head(latest)
 # Extracting the top 20 features from the XGBoost
 features = impo[1:20]$Feature
 train = read.csv("train.csv", header = TRUE)
+train = train[sample(1:nrow(train)),]
 train = data.frame(lapply(train,replaceNA))
 reduced.dataset = train[,c("target",features)]
 head(reduced.dataset)
