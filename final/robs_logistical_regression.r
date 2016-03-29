@@ -10,19 +10,39 @@ library(rpart)
 
 ############### SELECT the data to use #########################################
 
-# 1: Normal data w/ NAs removed
-data = train[complete.cases(train),] # remove incomplete data
-trainData = data.frame(data[1:55000,])
-testData = data.frame(data[55001:62561,])
+# 1: Normal data
+data = train
+trainData = data.frame(data[1:100000,])
+testData = data.frame(data[100001:114321,])
 
-# 2: Filled data
+# 2: NAs replaced with -999
+data = train
+data[is.na(data)] = -999
+trainData = data.frame(data[1:100000,])
+testData = data.frame(data[100001:114321,])
+
+# 3: Normal data w/ NAs removed
+data = train[complete.cases(train),] # remove incomplete data
+trainData = data.frame(data[1:50000,])
+testData = data.frame(data[50001:62561,])
+
+# 4: NAs replaced w/ median
 trainData = data.frame(train_filled[1:100000,])
 testData = data.frame(train_filled[100001:114321,])
 
-# 3: Imputed data
-train_imputed = train_imputed[,-1] # remove extra index col
+# 5: NAs replaced w/ median (Mode for categorical)
+if (ncol(train_imputed) > 133) train_imputed = train_imputed[,-1] # remove extra index col
 trainData = data.frame(train_imputed[1:100000,])
 testData = data.frame(train_imputed[100001:114321,])
+
+# 6: NAs replaced w/ mean
+data = train
+for(i in 1:ncol(data)){
+  data[is.na(data[,i]), i] = mean(x = data[,i], na.rm = TRUE)
+}
+trainData = data.frame(data[1:100000,])
+testData = data.frame(data[100001:114321,])
+
 
 #///////////// END: Select data ////////////////////////////////////////////////
 
@@ -65,6 +85,27 @@ newProb = exp(predictions)/(exp(predictions)+1)
 
 
 
+################ START: sig (TREE) columns attempt ########################
+sigCol = c(50,52,12,125,112,10,66,114,40,14,34,21,107,91,24,31,30,113,110,79) + 2
+newData = data.frame(trainData$target,trainData[,sigCol])
+mylogit <- glm(as.factor(trainData.target) ~ ., data = newData , family = binomial(link = "logit"))
+
+# Remove the same columns from our cross validation data
+newData2 = data.frame(testData[,sigCol])
+
+# Get the log-odds for each value
+predictions = predict(mylogit,newdata=newData2)
+
+# Create a vector of the probabilities of getting a 1 using logit func
+newProb = exp(predictions)/(exp(predictions)+1)
+
+#////////////// END: sig (TREE) columns attempt ///////////////////////////
+
+
+
+
+
+
 
 ################ START: all non-complex columns attempt ########################
 
@@ -86,7 +127,6 @@ newProb = exp(predictions)/(exp(predictions)+1)
 
 
 
-
 ############### START: Predictions #############################################
 
 # OPTION 1: Randomly pick 1s and 0s using the probabilities discovered
@@ -97,8 +137,8 @@ for (i in 1:7561) {
 finalPredict = otherPredictions
 
 # OPTION 2: Assume prob above .5 are 1 and below are 0
-newProb[newProb>=.5] = 1
-newProb[newProb<0.5] = 0
+newProb[newProb>=.7] = 1
+newProb[newProb<0.7] = 0
 finalPredict = newProb
 
 #///////////// END: Predictions ////////////////////////////////////////////////
@@ -122,3 +162,4 @@ success = which(finalPredict == testData$target)
 length(success) / nrow(testData)
 
 #///////////// END: Validation /////////////////////////////////////////////////
+
