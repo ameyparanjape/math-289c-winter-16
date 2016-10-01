@@ -76,4 +76,4 @@ plot_conf_band = function(x, y, p, title, xlabel, ylabel){
 
 
 plot_conf_band(gauge$gain, gauge$density, 1, title = "Density vs Log of Gain", xlabel = "Log of Gain", ylabel = "Density")
-#hi
+#hi123
